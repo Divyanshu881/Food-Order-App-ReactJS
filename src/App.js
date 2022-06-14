@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import Header from "./Component/Layout/Header";
 import Meals from "./Component/Meals/Meals";
 import Cart from "./Component/Cart/Cart";
+import CartProvider from "./Component/Store/CartProvider";
 function App() {
 
   const [activate,setActivate]=useState(false);
@@ -17,11 +18,11 @@ function App() {
         console.log('Odering .....');
   }
   return (
-    <React.Fragment>
+    <CartProvider>
       {activate && <Cart onClose={closeCartlHandler} onOrder={orderModalHandler}/>}
       <Header onClick ={openCartHandler}/>
       <Meals/>
-    </React.Fragment>
+    </CartProvider>
   );
 }
 
