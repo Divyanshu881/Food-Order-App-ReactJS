@@ -12,7 +12,7 @@ const MealItemForm = (props) => {
 
     if (
       entredAmount.trim().length === 0 ||
-      numberEntredAmount < 0 ||
+      numberEntredAmount < 1 ||
       numberEntredAmount > 5
     ) {
       setAmountIsValid(false);
@@ -28,16 +28,16 @@ const MealItemForm = (props) => {
         input={{
           id: "amount_" + props.id,
           type: "number",
-          min: "0",
+          min: "1",
           max: "5",
           step: "1",
-          defaultValue: "0",
+          defaultValue: "1",
           // readOnly: true,
         }}
       />
 
       <button>+Add</button>
-      {!amountIsValid && <p>Enter the valid amount between 0-5</p>}
+      {!amountIsValid && <p>Enter the valid amount between 1-5</p>}
     </form>
   );
 };
