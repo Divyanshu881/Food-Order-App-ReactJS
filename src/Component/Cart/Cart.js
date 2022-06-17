@@ -8,6 +8,8 @@ import Checkout from "./Checkout";
 const Cart = (props) => {
   const ctx = useContext(CartContext);
   const [isCheckout, setIscheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmitting, setDidSubmitting] = useState(false);
 
   const cartItemAddHandler = (item) => {
     ctx.addItem({ ...item, amount: 1 });
@@ -20,8 +22,9 @@ const Cart = (props) => {
     setIscheckout(true);
   };
 
-  const submitOrderHandler = (userData) => {
-    fetch(
+  const submitOrderHandler = async (userData) => {
+    setIsSubmitting(true);
+    await fetch(
       "https://food-order-app-87414-default-rtdb.firebaseio.com/orders.json",
       {
         method: "POST",
@@ -30,12 +33,10 @@ const Cart = (props) => {
           orderedItems: ctx.items,
         }),
       }
-    ).then((response)=>{
-      if(!response.ok)
-      {
-        console.log('Something went wrong');
-      }
-    });
+    );
+    setIsSubmitting(false);
+    setDidSubmitting(true);
+    ctx.clearCart();
   };
 
   const cartItems = (
@@ -67,8 +68,9 @@ const Cart = (props) => {
       )}
     </div>
   );
-  return (
-    <Modal onClose={props.onClose}>
+  const cartModalContent = (
+    <>
+      {" "}
       {cartItems}
       <div className={classes.total}>
         <span>Amount</span>
@@ -78,6 +80,23 @@ const Cart = (props) => {
         <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />
       )}
       {!isCheckout && modalAction}
+    </>
+  );
+
+  const isSubmittingModalContent = <p>Sending Order Data .... </p>;
+  const didSubmitModalContent = <><p>Successfully sent the order!!!</p>
+  <div className={classes.actions}>
+      <button className={classes.button} onClick={props.onClose}>
+        Close
+      </button>
+    </div>
+  </>;
+  return (
+    <Modal onClose={props.onClose}>
+      {!isSubmitting && !didSubmitting && cartModalContent}
+      {isSubmitting && !didSubmitting && isSubmittingModalContent}
+      {!isSubmitting && didSubmitting && didSubmitModalContent}
+
     </Modal>
   );
 };
