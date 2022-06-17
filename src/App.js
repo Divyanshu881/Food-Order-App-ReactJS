@@ -14,12 +14,10 @@ function App() {
   const openCartHandler =(event)=>{
     setActivate(true);
   }
-  const orderModalHandler =(event)=>{
-        console.log('Odering .....');
-  }
+ 
   return (
     <CartProvider>
-      {activate && <Cart onClose={closeCartlHandler} onOrder={orderModalHandler}/>}
+      {activate && <Cart onClose={closeCartlHandler}/>}
       <Header onClick ={openCartHandler}/>
       <Meals/>
     </CartProvider>
