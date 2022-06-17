@@ -43,6 +43,12 @@ const Checkout = (props) => {
     if (!isFormValid) {
       return;
     }
+    props.onConfirm({
+        name: entredName,
+        street: entredStreet,
+        postalCode: entredPin,
+        city: entredCity
+    });
   };
 
   const nameControlClasses = `${classes.control} ${
@@ -85,7 +91,7 @@ const Checkout = (props) => {
         <button type="button" onClick={props.onCancel}>
           Cancel
         </button>
-        <button className={classes.submit}>Confirm</button>
+        <button className={classes.submit} >Confirm</button>
       </div>
     </form>
   );
