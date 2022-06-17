@@ -66,22 +66,15 @@ const AvailableMeals = (props) => {
   }
 
   if (isLoading) {
-    content = <section className={classes.MealsLoading}><p>Loading...</p></section>;
+    content = (
+      <section className={classes.MealsLoading}>
+        <p>Loading...</p>
+      </section>
+    );
   }
 
   return (
     <Card className={classes.meals}>
-      {/* <ul>
-        {meals.map((meal) => (
-          <MealItem
-            key={meal.id}
-            id={meal.id}
-            name={meal.name}
-            description={meal.description}
-            price={meal.price}
-          />
-        ))}
-      </ul> */}
       {content}
     </Card>
   );
